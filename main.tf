@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "keyvault" {
-  name                        = "itcckeyvault001"
+  name                        = "itcckeyvault002"
   location                    = data.azurerm_resource_group.terraform.location
   resource_group_name         = data.azurerm_resource_group.terraform.name
   enabled_for_disk_encryption = false
@@ -32,7 +32,7 @@ resource "azurerm_key_vault" "keyvault" {
 }
 
 resource "azurerm_storage_account" "storageaccount" {
-  name                      = "itccstorageaccountfa001"
+  name                      = "itccstorageaccountfa002"
   resource_group_name       = data.azurerm_resource_group.terraform.name
   location                  = data.azurerm_resource_group.terraform.location
   account_replication_type  = "LRS"
