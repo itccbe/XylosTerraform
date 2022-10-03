@@ -1,5 +1,9 @@
-output "law-id" {
+output "law-workspace-id" {
   value = azurerm_log_analytics_workspace.loganalyticsworkspace.workspace_id
+}
+
+output "law-id" {
+  value = azurerm_log_analytics_workspace.loganalyticsworkspace.id
 }
 
 output "law-name" {
