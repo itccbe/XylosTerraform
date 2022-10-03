@@ -9,3 +9,9 @@ variable "environment" {
 variable "location" {
   default = "westeurope"
 }
+
+variable "resource_group_name" {
+  default = "terraform"
+}
+
+variable "lawid" {}
