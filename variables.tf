@@ -1,16 +1,11 @@
-variable "location" {
-  default = "westeurope"
+variable "customer_abbreviation" {
+  default = "itcc"
 }
 
 variable "environment" {
-  description = "OAuth secret"
-  type = string
+  default = "devtst"
 }
 
-variable "resource_group_name" {
-  type = string
-}
-
-variable "lawid" {
-  type = string
+variable "location" {
+  default = "westeurope"
 }
