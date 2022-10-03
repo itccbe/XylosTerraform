@@ -99,7 +99,7 @@
 # }
 
 module "modules" {
-  source                   = "git@github.com:itccbe/Modules.git?ref=1.0.0"
+  source                   = "github.com/itccbe/Modules.git?ref=1.0.0"
   customer_abbreviation    = var.customer_abbreviation
   location                 = var.location
   environment              = var.environment
