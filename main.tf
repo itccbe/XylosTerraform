@@ -43,7 +43,7 @@ resource "azurerm_storage_account" "storageaccount" {
   access_tier               = "Hot"
 
   network_rules {
-    default_action = "Allow"
+    default_action = "Deny"
   }
   lifecycle {
     ignore_changes = [
