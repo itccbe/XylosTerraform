@@ -1,36 +1,3 @@
-resource "azurerm_key_vault" "keyvault" {
-  name                        = "itcckeyvault002"
-  location                    = data.azurerm_resource_group.terraform.location
-  resource_group_name         = data.azurerm_resource_group.terraform.name
-  enabled_for_disk_encryption = false
-  tenant_id                   = data.azurerm_client_config.current.tenant_id
-  soft_delete_retention_days  = 7
-  purge_protection_enabled    = false
-
-  sku_name = "standard"
-
-  access_policy {
-    tenant_id = data.azurerm_client_config.current.tenant_id
-    object_id = data.azurerm_client_config.current.object_id
-
-    key_permissions = [
-      "Get",
-    ]
-
-    secret_permissions = [
-      "Get",
-      "Delete",
-      "List",
-      "Set",
-      "Purge"
-    ]
-
-    storage_permissions = [
-      "Get",
-    ]
-  }
-}
-
 resource "azurerm_storage_account" "storageaccount" {
   name                      = "itccstorageaccountfa002"
   resource_group_name       = data.azurerm_resource_group.terraform.name
