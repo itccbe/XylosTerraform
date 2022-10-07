@@ -24,11 +24,11 @@ resource "azurerm_log_analytics_workspace" "loganalyticsworkspace" {
   }
 }
 
-# resource "azurerm_management_lock" "lock-law-services" {
-#   name       = "Delete"
-#   scope      = azurerm_log_analytics_workspace.law-services.id
-#   lock_level = "CanNotDelete"
-# }
+resource "azurerm_management_lock" "lock-law-services" {
+  name       = "Delete"
+  scope      = azurerm_log_analytics_workspace.loganalyticsworkspace.id
+  lock_level = "CanNotDelete"
+}
 
 # create automation account which will be linked to the LAW
 resource "azurerm_automation_account" "automationaccount" {
