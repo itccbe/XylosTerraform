@@ -1,0 +1,4 @@
+formatter: markdown
+header-from: .header.md
+sort:
+  enabled: true
