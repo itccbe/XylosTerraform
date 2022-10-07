@@ -246,7 +246,7 @@ resource "azurerm_log_analytics_solution" "law_solution_changetracking" {
   resource_group_name   = azurerm_resource_group.terraform.name
   location              = var.location
   solution_name         = "ChangeTracking"
-  workspace_resource_id = azurerm_log_analytics_workspace.law-services.id
+  workspace_resource_id = azurerm_log_analytics_workspace.loganalyticsworkspace.id
   workspace_name        = azurerm_log_analytics_workspace.loganalyticsworkspace.name
 
   plan {
