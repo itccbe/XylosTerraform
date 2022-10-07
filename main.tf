@@ -83,6 +83,7 @@ resource "azurerm_log_analytics_linked_service" "loganalyticsworkspacelinkedserv
   resource_group_name = data.azurerm_resource_group.terraform.name
   workspace_id        = azurerm_log_analytics_workspace.loganalyticsworkspace.id
   read_access_id      = azurerm_automation_account.automationaccount.id
+  provider = azurerm.foo
 }
 
 resource "azurerm_log_analytics_solution" "loganalyticsworkspacesolution" {
