@@ -5,7 +5,7 @@ locals {
 }
 
 # create log analytics workspace
-resource "azurerm_log_analytics_workspace" "law-services" {
+resource "azurerm_log_analytics_workspace" "loganalyticsworkspace" {
   name                = "law-services-${var.customer_abbreviation}-${var.environment}${local.project}-shared"
   resource_group_name = azurerm_resource_group.services.name
   location            = var.location
@@ -25,7 +25,7 @@ resource "azurerm_log_analytics_workspace" "law-services" {
 # }
 
 # create automation account which will be linked to the LAW
-resource "azurerm_automation_account" "aa-services" {
+resource "azurerm_automation_account" "automationaccount" {
   name                = "aa-services-${var.customer_abbreviation}-${var.environment}${local.project}-shared"
   location            = var.location
   resource_group_name = azurerm_resource_group.services.name
@@ -40,7 +40,7 @@ resource "azurerm_automation_account" "aa-services" {
 }
 
 # link the automation account to the LAW
-resource "azurerm_log_analytics_linked_service" "AA-LAW-LINK" {
+resource "azurerm_log_analytics_linked_service" "loganalyticsworkspacelinkedservice" {
   resource_group_name = azurerm_resource_group.services.name
   workspace_id        = azurerm_log_analytics_workspace.law-services.id
   read_access_id      = azurerm_automation_account.aa-services.id
@@ -48,7 +48,7 @@ resource "azurerm_log_analytics_linked_service" "AA-LAW-LINK" {
 
 
 # add updates workspace solution to log analytics
-resource "azurerm_log_analytics_solution" "law_solution_updates" {
+resource "azurerm_log_analytics_solution" "loganalyticsworkspacesolution" {
   resource_group_name   = azurerm_resource_group.services.name
   location              = var.location
   solution_name         = "Updates"
