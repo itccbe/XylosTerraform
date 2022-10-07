@@ -4,3 +4,4 @@ variable "location" {}
 variable "project" {
   default = ""
 }
+variable "resource_group" {}
