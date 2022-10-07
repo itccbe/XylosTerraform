@@ -43,7 +43,7 @@ resource "azurerm_storage_account" "storageaccount" {
   access_tier               = "Hot"
 
   network_rules {
-    default_action = "Allow"
+    default_action = "Deny"
   }
   lifecycle {
     ignore_changes = [
@@ -81,7 +81,7 @@ resource "azurerm_management_lock" "loganalyticsworkspacelock" {
 
 resource "azurerm_log_analytics_linked_service" "loganalyticsworkspacelinkedservice" {
   resource_group_name = data.azurerm_resource_group.terraform.name
-  workspace_id        = replace(replace(azurerm_log_analytics_workspace.loganalyticsworkspace.id, "microsoft.operationalinsights", "Microsoft.OperationalInsights"), "resourcegroups", "resourceGroups")
+  workspace_id        = var.lawid
   read_access_id      = azurerm_automation_account.automationaccount.id
 }
 
