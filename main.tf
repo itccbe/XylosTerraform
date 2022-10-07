@@ -103,4 +103,5 @@ module "services" {
   customer_abbreviation    = var.customer_abbreviation
   location                 = var.location
   environment              = var.environment
+  resource_group           = data.azurerm_resource_group.terraform
 }
