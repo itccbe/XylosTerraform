@@ -20,9 +20,3 @@ terraform {
 provider "azurerm" {
   features {}
 }
-
-provider "azurerm" {
-  features {}
-  alias   = "foo"
-  version = "3.26"
-}
