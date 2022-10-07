@@ -6,7 +6,7 @@ locals {
 
 # create resource group for backup
 resource "azurerm_resource_group" "terraform" {
-  name     = "terrafrom"
+  name     = "terraform"
   location = var.location
 }
 
