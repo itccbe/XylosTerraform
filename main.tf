@@ -99,8 +99,7 @@ resource "azurerm_storage_share" "azureshare" {
 # }
 
 module "services" {
-  source = "./modules/module.tf"
-  #source                   = "C:\\VSCODE\\acerta-terraform-modules\\Services"
+  source = "./modules"
   customer_abbreviation    = var.customer_abbreviation
   location                 = var.location
   environment              = var.environment
