@@ -3,7 +3,7 @@
 name: 'InfraCost'
 on:
   workflow_dispatch:
-  [pull_request]
+  pull_request:
 env:
   # If you use private modules you'll need this env variable to use
   # the same ssh-agent socket value across all jobs & steps.
