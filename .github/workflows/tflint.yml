@@ -33,5 +33,9 @@ jobs:
     - name: Init TFLint
       run: tflint --init
 
+    - name: Terraform Init
+      id: init
+      run: terraform init -reconfigure
+
     - name: Run TFLint
       run: tflint -f compact
