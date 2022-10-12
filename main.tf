@@ -77,7 +77,7 @@ resource "azurerm_network_interface" "sftp" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = data.azurerm_subnet.subnet1
+    subnet_id                     = data.azurerm_subnet.subnet1.id
     private_ip_address_allocation = "Dynamic"
   }
 }
