@@ -1,15 +1,14 @@
 variable "customer_abbreviation" {
   default = "itcc"
+  type = string
 }
 
 variable "environment" {
   default = "devtst"
+  type = string
 }
 
 variable "location" {
   default = "westeurope"
-}
-
-variable "resource_group_name" {
-  default = "terraform"
+  type = string
 }
