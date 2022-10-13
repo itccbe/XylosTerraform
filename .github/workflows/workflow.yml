@@ -109,7 +109,7 @@ jobs:
           -Dsonar.organization=itccbe
 
   terraform:
-    name: 'Terraform Validate'
+    name: 'Terraform Validate and Plan'
     needs: [checkov, tfsec, tflint, Analysis]
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
@@ -172,6 +172,28 @@ jobs:
     - name: Terraform Plan Status
       if: steps.plan.outcome == 'failure'
       run: exit 1
+
+  deploy:
+    name: 'Terraform Apply'
+    needs: terraform
+    environment: Production
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+      ARM_ACCESS_KEY: ${{ secrets.ACCOUNT_KEY }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Terraform Init
+      id: init
+      run: terraform init
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
