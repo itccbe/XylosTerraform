@@ -92,9 +92,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with:
-        args:
-        -Dsonar.projectKey=itccbe_XylosTerraform
-        -Dsonar.organization=itccbe
+        args: >
+          -Dsonar.projectKey=itccbe_XylosTerraform
+          -Dsonar.organization=itccbe
 
   terraform:
     name: 'Terraform Validate'
