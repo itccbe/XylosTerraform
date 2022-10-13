@@ -7,19 +7,110 @@ on:
   pull_request:
 
 jobs:
+  checkov:
+    name: 'Checkov - Scan Terraform files'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Test with Checkov
+      id: checkov
+      uses: bridgecrewio/checkov-action@master
+      with:
+        directory: example/examplea
+        framework: terraform
+
+  tfsec:
+    name: 'tfsec sarif report'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    steps:
+    - name: Clone repo
+      uses: actions/checkout@v3
+      with:
+        persist-credentials: false
+
+    - name: tfsec
+      uses: aquasecurity/tfsec-sarif-action@v0.1.0
+      with:
+        sarif_file: tfsec.sarif
+
+    - name: Upload SARIF file
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        # Path to SARIF file relative to the root of the repository
+        sarif_file: tfsec.sarif
+
+  tflint:
+    name: 'Terraform Lint'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      name: Checkout source code
+
+    - uses: actions/cache@v2
+      name: Cache plugin dir
+      with:
+        path: ~/.tflint.d/plugins
+        key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
+
+    - uses: terraform-linters/setup-tflint@v2
+      name: Setup TFLint
+      with:
+        tflint_version: latest
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Show version
+      run: tflint --version
+
+    - name: Init TFLint
+      run: tflint --init
+
+    - name: Terraform Init
+      id: init
+      run: terraform init -reconfigure
+
+    - name: Run TFLint
+      run: tflint -f compact
+
+  Analysis:
+    name: 'SonarCloud Scan'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Analyze with SonarCloud
+        uses: SonarSource/sonarcloud-github-action@de2e56b42aa84d0b1c5b622644ac17e505c9a049
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args:
+          -Dsonar.projectKey=itccbe_XylosTerraform
+          -Dsonar.organization=itccbe
+
   terraform:
-    name: 'Terraform'
+    name: 'Terraform Validate'
+    needs: [checkov, tfsec, tflint, Analysis]
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+      ARM_ACCESS_KEY: ${{ secrets.ACCOUNT_KEY }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
 
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-
-    - name: Terraform Format
-      id: fmt
-      run: terraform fmt -check
+      uses: hashicorp/setup-terraform@v2
 
     - name: Terraform Init
       id: init

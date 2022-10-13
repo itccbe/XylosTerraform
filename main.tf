@@ -77,7 +77,7 @@ resource "azurerm_network_interface" "sftp" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = data.azurerm_subnet.subnet1
+    subnet_id                     = data.azurerm_subnet.subnet1.id
     private_ip_address_allocation = "Dynamic"
   }
 }
@@ -86,7 +86,7 @@ resource "azurerm_linux_virtual_machine" "sftp" {
   name                = "${var.customer_abbreviation}-${var.environment}-sftp-vm"
   location            = data.azurerm_resource_group.terraform.location
   resource_group_name = data.azurerm_resource_group.terraform.name
-  size                = "Standard_D2s_v5"
+  size                = "Standard_D2s_v3"
   admin_username      = var.environment
   admin_password = random_password.sftp.result
   disable_password_authentication = false
