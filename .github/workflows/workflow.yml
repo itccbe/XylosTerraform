@@ -21,7 +21,7 @@ jobs:
       id: checkov
       uses: bridgecrewio/checkov-action@master
       with:
-        directory: example/examplea
+        directory: .
         framework: terraform
 
   tfsec:
@@ -50,6 +50,12 @@ jobs:
 
   tflint:
     name: 'Terraform Lint'
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+      ARM_ACCESS_KEY: ${{ secrets.ACCOUNT_KEY }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
