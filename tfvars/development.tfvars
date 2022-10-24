@@ -1,2 +1,2 @@
-environment = "development"
-resource_group_name = "terraform"
+environment = "dev"
+resource_group_name = "terraform-dev"

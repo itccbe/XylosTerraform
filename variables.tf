@@ -3,10 +3,9 @@
 #   type = string
 # }
 
-# variable "environment" {
-#   default = "devtst"
-#   type = string
-# }
+variable "environment" {
+  type = string
+}
 
 variable "location" {
   default = "westeurope"

@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "storageaccount" {
-  name                      = "itccstorageaccountfa001"
+  name                      = "itccstorageaccountfa${var.environment}001"
   resource_group_name       = var.resource_group_name
   location                  = var.location
   account_replication_type  = "LRS"
@@ -25,7 +25,7 @@ resource "azurerm_storage_share" "azureshare" {
 }
 
 resource "azurerm_key_vault" "keyvault" {
-  name                        = "itcckeyvault33"
+  name                        = "itcckeyvault${var.environment}33"
   location                    = var.location
   resource_group_name         = var.resource_group_name
   enabled_for_disk_encryption = true
