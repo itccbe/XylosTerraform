@@ -10,7 +10,7 @@ on:
       environment:
         description: "Please choose the environment to deploy to"
         type: environment
-        default: Development
+        default: Production
 
 jobs:
   checkov:
@@ -92,7 +92,7 @@ jobs:
 
     - name: Terraform Init
       id: init
-      run: terraform init -reconfigure
+      run: terraform init -reconfigure -backend-config="tfvars/${{ github.event.inputs.environment }}.tfbackend"
 
     - name: Run TFLint
       run: tflint -f compact
@@ -132,7 +132,7 @@ jobs:
 
     - name: Terraform Init
       id: init
-      run: terraform init
+      run: terraform init -reconfigure -backend-config="tfvars/${{ github.event.inputs.environment }}.tfbackend"
 
     - name: Terraform Validate
       id: validate
@@ -141,7 +141,7 @@ jobs:
     - name: Terraform Plan
       id: plan
       if: github.event_name == 'pull_request'
-      run: terraform plan -no-color -input=false
+      run: terraform plan -no-color -input=false -var-file="tfvars/${{ github.event.inputs.environment }}.tfvars"
       continue-on-error: true
 
     - name: Update Pull Request
@@ -243,8 +243,8 @@ jobs:
 
     - name: Terraform Init
       id: init
-      run: terraform init
+      run: terraform init -backend-config="tfvars/${{ github.event.inputs.environment }}.tfbackend"
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve -input=false
+      run: terraform apply -auto-approve -input=false -var-file="tfvars/${{ github.event.inputs.environment }}.tfvars"
