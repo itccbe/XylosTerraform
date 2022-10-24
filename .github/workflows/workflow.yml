@@ -260,9 +260,15 @@ jobs:
       uses: hashicorp/setup-terraform@v2
 
     - name: Terraform Init
-      id: init
+      id: initmanual
+      if: github.event_name == 'workflow_dispatch'
       run: terraform init -backend-config="${{ github.event.inputs.environment }}.tfbackend"
+
+    - name: Terraform Init
+      id: init
+      if: github.event_name != 'workflow_dispatch'
+      run: terraform init -backend-config="tfvars/production.tfbackend"
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve -input=false -var-file="${{ github.event.inputs.environment }}.tfvars"
+      run: terraform apply -auto-approve -input=false -var-file="tfvars/production.tfvars"
