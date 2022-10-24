@@ -137,8 +137,14 @@ jobs:
       uses: hashicorp/setup-terraform@v2
 
     - name: Terraform Init
-      id: init
+      id: initmanual
+      if: github.event_name == 'workflow_dispatch'
       run: terraform init -reconfigure -backend-config="${{ github.event.inputs.environment }}.tfbackend"
+
+    - name: Terraform Init
+      id: init
+      if: github.event_name != 'workflow_dispatch'
+      run: terraform init -reconfigure -backend-config="Production.tfbackend"
 
     - name: Terraform Validate
       id: validate
@@ -146,7 +152,6 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      if: github.event_name == 'pull_request'
       run: terraform plan -no-color -input=false -var-file="${{ github.event.inputs.environment }}.tfvars"
       continue-on-error: true
 
