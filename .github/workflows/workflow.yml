@@ -95,7 +95,7 @@ jobs:
     - name: Terraform Init
       id: initmanual
       if: github.event_name == 'workflow_dispatch'
-      run: terraform init -reconfigure -backend-config="${{ github.event.inputs.environment }}.tfbackend"
+      run: terraform init -reconfigure -backend-config="${{ github.event.inputs.stage }}.tfbackend"
 
     - name: Terraform Init
       id: init
@@ -141,7 +141,7 @@ jobs:
     - name: Terraform Init
       id: initmanual
       if: github.event_name == 'workflow_dispatch'
-      run: terraform init -reconfigure -backend-config="${{ github.event.inputs.environment }}.tfbackend"
+      run: terraform init -reconfigure -backend-config="${{ github.event.inputs.stage }}.tfbackend"
 
     - name: Terraform Init
       id: init
@@ -155,7 +155,7 @@ jobs:
     - name: Terraform Plan
       id: planmanual
       if: github.event_name == 'workflow_dispatch'
-      run: terraform plan -no-color -input=false -var-file="${{ github.event.inputs.environment }}.tfvars"
+      run: terraform plan -no-color -input=false -var-file="${{ github.event.inputs.stage }}.tfvars"
       continue-on-error: true
 
     - name: Terraform Plan
@@ -246,7 +246,7 @@ jobs:
   deploy:
     name: 'Terraform Apply'
     needs: [terraform, infracost]
-    environment: "${{ github.event.inputs.environment }}"
+    environment: "${{ github.event.inputs.stage }}"
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
@@ -264,7 +264,7 @@ jobs:
     - name: Terraform Init
       id: initmanual
       if: github.event_name == 'workflow_dispatch'
-      run: terraform init -backend-config="${{ github.event.inputs.environment }}.tfbackend"
+      run: terraform init -backend-config="${{ github.event.inputs.stage }}.tfbackend"
 
     - name: Terraform Init
       id: init
@@ -273,7 +273,7 @@ jobs:
 
     - name: Terraform Apply
       if: github.event_name == 'workflow_dispatch'
-      run: terraform apply -auto-approve -input=false -var-file="${{ github.event.inputs.environment }}.tfvars"
+      run: terraform apply -auto-approve -input=false -var-file="${{ github.event.inputs.stage }}.tfvars"
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
