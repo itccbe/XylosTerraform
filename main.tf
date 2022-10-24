@@ -25,7 +25,7 @@ resource "azurerm_storage_share" "azureshare" {
 }
 
 resource "azurerm_key_vault" "keyvault" {
-  name                        = "xyloskeyvault"
+  name                        = "itcckeyvault33"
   location                    = var.location
   resource_group_name         = var.resource_group_name
   enabled_for_disk_encryption = true
