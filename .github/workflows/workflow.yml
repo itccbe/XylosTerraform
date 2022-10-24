@@ -199,7 +199,6 @@ jobs:
   infracost:
     name: 'Calculate Azure cost'
     needs: [terraform]
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read
