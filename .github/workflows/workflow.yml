@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
+        description: "Please choose the environment to deploy to"
         type: environment
         default: Development
 
