@@ -92,7 +92,7 @@ jobs:
 
     - name: Terraform Init
       id: init
-      run: terraform init -reconfigure -backend-config="tfvars\${{ github.event.inputs.environment }}.tfbackend"
+      run: terraform init -reconfigure -backend-config="tfvars/${{ github.event.inputs.environment }}.tfbackend"
 
     - name: Run TFLint
       run: tflint -f compact
