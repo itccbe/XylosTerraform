@@ -92,7 +92,13 @@ jobs:
 
     - name: Terraform Init
       id: init
+      if: github.event_name == 'workflow_dispatch'
       run: terraform init -reconfigure -backend-config="${{ github.event.inputs.environment }}.tfbackend"
+
+    - name: Terraform Init
+      id: init
+      if: github.event_name != 'workflow_dispatch'
+      run: terraform init -reconfigure -backend-config="Production.tfbackend"
 
     - name: Run TFLint
       run: tflint -f compact
