@@ -8,7 +8,11 @@
 #   type = string
 # }
 
-# variable "location" {
-#   default = "westeurope"
-#   type = string
-# }
+variable "location" {
+  default = "westeurope"
+  type = string
+}
+
+variable "resource_group_name" {
+  type = string
+}

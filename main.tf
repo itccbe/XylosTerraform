@@ -1,7 +1,7 @@
 resource "azurerm_storage_account" "storageaccount" {
-  name                      = "itccstorageaccountfa002"
-  resource_group_name       = data.azurerm_resource_group.terraform.name
-  location                  = data.azurerm_resource_group.terraform.location
+  name                      = "itccstorageaccountfa001"
+  resource_group_name       = var.resource_group_name
+  location                  = var.location
   account_replication_type  = "LRS"
   account_tier              = "Standard"
   account_kind              = "StorageV2"
@@ -26,8 +26,8 @@ resource "azurerm_storage_share" "azureshare" {
 
 resource "azurerm_key_vault" "keyvault" {
   name                        = "xyloskeyvault"
-  location                    = data.azurerm_resource_group.terraform.location
-  resource_group_name         = data.azurerm_resource_group.terraform.name
+  location                    = var.location
+  resource_group_name         = var.resource_group_name
   enabled_for_disk_encryption = true
   tenant_id                   = data.azurerm_client_config.current.tenant_id
   soft_delete_retention_days  = 7
