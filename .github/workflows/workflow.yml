@@ -151,8 +151,15 @@ jobs:
       run: terraform validate -no-color
 
     - name: Terraform Plan
-      id: plan
+      id: planmanual
+      if: github.event_name == 'workflow_dispatch'
       run: terraform plan -no-color -input=false -var-file="${{ github.event.inputs.environment }}.tfvars"
+      continue-on-error: true
+
+    - name: Terraform Plan
+      id: plan
+      if: github.event_name != 'workflow_dispatch'
+      run: terraform plan -no-color -input=false -var-file="Production.tfvars"
       continue-on-error: true
 
     - name: Update Pull Request
