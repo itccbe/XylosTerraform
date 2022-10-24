@@ -1,6 +1,6 @@
-data "azurerm_resource_group" "terraform" {
-  name = "terraform"
-}
+# data "azurerm_resource_group" "terraform" {
+#   name = "terraform"
+# }
 
 # data "azurerm_subnet" "subnet1" {
 #   name                 = "subnet1"
