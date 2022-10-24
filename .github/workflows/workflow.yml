@@ -6,6 +6,10 @@ on:
       - main
   pull_request:
   workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        default: Development
 
 jobs:
   checkov:
