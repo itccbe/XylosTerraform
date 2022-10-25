@@ -251,7 +251,8 @@ jobs:
 
   deploy:
     name: 'Terraform Apply'
-    needs: [terraform, infracost]
+    if: ${{ always() }}
+    needs: [infracost]
     environment: "${{ github.event.inputs.stage }}"
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
