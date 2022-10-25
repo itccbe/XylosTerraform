@@ -2,7 +2,7 @@ resource "azurerm_storage_account" "storageaccount" {
   name                      = "itccsafa${var.environment}001"
   resource_group_name       = var.resource_group_name
   location                  = var.location
-  account_replication_type  = "LRS"
+  account_replication_type  = "GRS"
   account_tier              = "Standard"
   account_kind              = "StorageV2"
   enable_https_traffic_only = "true"
