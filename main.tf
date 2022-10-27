@@ -54,7 +54,7 @@ resource "azurerm_key_vault" "keyvault" {
 }
 
 resource "azurerm_virtual_network" "virtualnetwork" {
-  name                = "xylosvnet001"
+  name                = "vnet${var.environment}001"
   location            = var.location
   resource_group_name = var.resource_group_name
   address_space       = ["10.0.0.0/16"]
