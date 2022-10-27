@@ -64,16 +64,16 @@ resource "azurerm_virtual_network" "virtualnetwork" {
   }
 }
 
-# resource "random_password" "sftp" {
+# resource "random_password" "pwd" {
 #   length           = 16
 #   special          = true
 #   override_special = "!#$%&*()-_=+[]{}<>:?"
 # }
 
-# resource "azurerm_network_interface" "sftp" {
-#   name                = "${var.customer_abbreviation}-${var.environment}-sftp-nic"
-#   location            = data.azurerm_resource_group.terraform.location
-#   resource_group_name = data.azurerm_resource_group.terraform.name
+# resource "azurerm_network_interface" "vmnic" {
+#   name                = "nic-${var.environment}-vm-001"
+#   location            = var.location
+#   resource_group_name = var.resource_group_name
 
 #   ip_configuration {
 #     name                          = "internal"
@@ -82,24 +82,24 @@ resource "azurerm_virtual_network" "virtualnetwork" {
 #   }
 # }
 
-# resource "azurerm_linux_virtual_machine" "sftp" {
-#   name                = "${var.customer_abbreviation}-${var.environment}-sftp-vm"
-#   location            = data.azurerm_resource_group.terraform.location
-#   resource_group_name = data.azurerm_resource_group.terraform.name
+# resource "azurerm_linux_virtual_machine" "vm" {
+#   name                = "vm-${var.environment}-001"
+#   location            = var.location
+#   resource_group_name = var.resource_group_name
 #   size                = "Standard_D2s_v3"
 #   admin_username      = var.environment
-#   admin_password = random_password.sftp.result
+#   admin_password = random_password.pwd.result
 #   disable_password_authentication = false
 
 #   network_interface_ids = [
-#     azurerm_network_interface.sftp.id,
+#     azurerm_network_interface.vmnic.id,
 #   ]
 
 #   os_disk {
 #     caching              = "ReadWrite"
 #     storage_account_type = "Premium_LRS"
 #     disk_size_gb = 128
-#     name = "${var.customer_abbreviation}-${var.environment}-sftp-osdisk"
+#     name = "vm-${var.environment}-osdisk"
 #   }
 
 #   source_image_reference {
