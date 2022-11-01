@@ -164,7 +164,10 @@ jobs:
         AZURE_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
         AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         AZURE_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+        AZURE_STORAGE_ACCOUNT: statefilestorage001
+        AZURE_STORAGE_KEY: ${{ secrets.ACCOUNT_KEY }}
         DCTL_TO: azure+tf
+        DCTL_FROM: tfstate+azurerm://statefile/**
 
     - name: Terraform Plan
       id: planmanual
