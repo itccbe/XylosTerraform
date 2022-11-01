@@ -5,7 +5,14 @@ repos:
       rev: v1.76.0
       hooks:
           - id: terraform_checkov
+            args:
+              - --args=--quiet
+              - --args=--framework terraform
           - id: infracost_breakdown
+            args:
+              - --args=--path=.
+              - --hook-config='.currency == "EUR"'
+            verbose: true
           - id: terraform_docs
           - id: terraform_fmt
           - id: terraform_providers_lock
