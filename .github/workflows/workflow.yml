@@ -160,7 +160,7 @@ jobs:
     - name: Run driftctl
       uses: snyk/driftctl-action@v1.2.0
       env:
-        DCTL_TO=azure+tf
+        DCTL_TO: azure+tf
 
     - name: Terraform Plan
       id: planmanual
