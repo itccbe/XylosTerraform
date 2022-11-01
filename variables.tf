@@ -9,7 +9,7 @@ variable "environment" {
 
 variable "location" {
   default = "westeurope"
-  type = string
+  type    = string
 }
 
 variable "resource_group_name" {
