@@ -157,9 +157,6 @@ jobs:
       id: validate
       run: terraform validate -no-color
 
-    - name: Run driftctl
-      uses: snyk/driftctl-action@v1.2.0
-
     - name: Terraform Plan
       id: planmanual
       if: github.event_name == 'workflow_dispatch'
