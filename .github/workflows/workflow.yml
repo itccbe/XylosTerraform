@@ -14,6 +14,10 @@ on:
         - Development
         - Test
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   checkov:
     name: 'Checkov - Scan Terraform files'
@@ -129,21 +133,26 @@ jobs:
     name: 'Terraform Validate and Plan'
     if: github.ref != 'refs/heads/main'
     needs: [checkov, tfsec, tflint, Analysis]
-    env:
-      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
-      ARM_ACCESS_KEY: ${{ secrets.ACCOUNT_KEY }}
+    # env:
+    #   ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+    #   ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+    #   ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    #   ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+    #   ARM_ACCESS_KEY: ${{ secrets.ACCOUNT_KEY }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Log in to Azure using OIDC
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.0.5
 
     - name: Terraform Init
       id: initmanual
