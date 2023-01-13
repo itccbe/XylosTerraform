@@ -1,4 +1,4 @@
-name: 'Terraform - complete workflow'
+name: 'Terraform - Complete workflow'
 
 on:
   push:
